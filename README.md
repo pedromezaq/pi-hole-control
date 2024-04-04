@@ -10,7 +10,7 @@ Tested with:
 - Raspberry Pi 3 Model B Plus Rev 1.3 running Raspbian GNU/Linux 11 (bullseye) armv7l 
 
 ## Features
-- Uses the command line utility pihole to enable and disable DNS blocking
+- Uses the module APiHole to communicate with the PiHole via its API.
 - Status polling to set LED state if Pi-hole was disabled through web interface
 - Runs as system service (see scripts/init.d)
 
@@ -19,15 +19,19 @@ Tested with:
     ```
     curl -L install.pi-hole.net | bash
     ```
-1. Clone this the project to your home folder.
-
-
+2. Clone this the project to your home folder.
+ 
    or wherever you prefer, e.g. /usr/local/bin
-1. Connect button and LED:
+
+3. Install via pip3 the required modules:
+    ```
+    sudo pip3 install RPi.GPIO argparse logging requests APiHole
+    ```
+4. Connect button and LED:
    * wire a normally open push button to GPIO pin 40 and ground
    * wire a green LED to a resistor to GPIO pin 38 and ground
    * wire a red LED to a resistor to GPIO pin 36 and ground
-1. Install script as system service:
+5. Install script as system service:
 
    if this script was not installed in /home/pi: change $DIR and $LOG_DIR in pihole-control script.
     ```
@@ -35,11 +39,8 @@ Tested with:
     sudo chmod 755 /etc/init.d/pihole-control
     sudo update-rc.d pihole-control defaults
     ```
-1. Start daemon
+6. Start daemon
     ```
     sudo service pihole-control start
     ```
-1. Press the button to disable/enable Pi-hole DNS blocking as needed
-  
-## TODO
-- Use Pi-hole API once released instead of pihole utility 
+7. Press the button to disable/enable Pi-hole DNS blocking as needed
